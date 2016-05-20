@@ -11,8 +11,8 @@ Pod::Spec.new do |s|
   s.requires_arc = true
   s.dependency 'URBNConvenience', '> 0.8.2'
 
-  s.source_files = 'Pod/Classes/**/*'
-  s.resource_bundles = {
-    'URBNAlert' => ['Pod/Assets/*.png']
-  }
+#  s.source_files = 'Pod/Classes/**/*'
+#  s.resource_bundles = {
+#    'URBNAlert' => ['Pod/Assets/*.png']
+#  }
 end
