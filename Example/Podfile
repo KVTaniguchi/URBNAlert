@@ -1,5 +1,5 @@
 source 'https://github.com/CocoaPods/Specs.git'
-platform :ios, '8.0'
+platform :ios, '10.0'
 use_frameworks!
 
 target 'URBNAlert' do
@@ -10,3 +10,14 @@ end
 
 
 pod "URBNAlert", :path => "../"
+
+post_install do |installer|
+      installer.pods_project.targets.each do |target|
+          next unless target.name == 'URBNConvenience'
+
+          puts "Configuring swift version for URBNConvenience"
+          target.build_configurations.each do |config|
+              config.build_settings['SWIFT_VERSION'] = '2.3'
+          end
+      end
+  end
