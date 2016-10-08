@@ -12,16 +12,3 @@ end
 
 pod "URBNAlert", :path => "../"
 
-#post_install do |installer|
-#    installer.pods_project.targets.each do |target|
-#        next unless target.name == 'URBNConvenience'
-
-#        puts "Configuring swift version for URBNConvenience"
-#        target.build_configurations.each do |config|
-#            config.build_settings['SWIFT_VERSION'] = ‘3.0’
-#        end
-#    end
-#end
-
-#pod 'SwiftyJSON', :git => "https://github.com/SwiftyJSON/SwiftyJSON.git", :branch => "xcode7"
-#end
