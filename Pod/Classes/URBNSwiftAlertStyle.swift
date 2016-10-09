@@ -16,38 +16,73 @@ class URBNSwiftAlertStyle: NSObject {
     /**
      * Background color of the buttons for active alerts
      */
-    var  buttonBackgroundColor: UIColor
+    var  buttonBackgroundColor: UIColor? {
+        get {
+            guard let buttonBackgroundColor = buttonBackgroundColor else { return .lightGrayColor }
+            return buttonBackgroundColor
+        }
+    }
 
     /**
      * Background color of the denial button for an active alert (at position 0)
      */
-    var destructionButtonBackgroundColor: UIColor
+    var destructionButtonBackgroundColor: UIColor? {
+        get {
+            guard let destructionButtonBackgroundColor = destructionButtonBackgroundColor else { return .red }
+            return destructionButtonBackgroundColor
+        }
+    }
 
     /**
      * Text color of destructive button colors
      */
-    var destructiveButtonTitleColor: UIColor
+    var destructiveButtonTitleColor: UIColor? {
+        get {
+            guard let destructiveButtonTitleColor = destructiveButtonTitleColor else { return .white }
+            return destructiveButtonTitleColor
+        }
+    }
 
     /**
      * Text color of destructive button title when highlighted
      */
-    var destructiveButtonHighlightTitleColor: UIColor
+    var destructiveButtonHighlightTitleColor: UIColor? {
+        get {
+            guard let destructiveButtonHighlightTitleColor = destructiveButtonHighlightTitleColor else { return destructiveButtonTitleColor }
+            return destructiveButtonHighlightTitleColor
+        }
+    }
 
     /**
      * Background color of the cancel button for an active alert
      */
-    var cancelButtonBackgroundColor: UIColor
+    var cancelButtonBackgroundColor: UIColor? {
+        get {
+            guard let cancelButtonBackgroundColor = cancelButtonBackgroundColor else { return .lightGrayColor }
+            return cancelButtonBackgroundColor
+        }
+    }
 
     /**
      * Text color of cancel button colors
      */
-    var  cancelButtonTitleColor: UIColor
+    var  cancelButtonTitleColor: UIColor? {
+        get {
+            guard let cancelButtonTitleColor = cancelButtonTitleColor else { return .white }
+            return cancelButtonTitleColor
+        }
+    }
 
     /**
      * Text color of cancel button title when highlighted
      */
 
-    var cancelButtonHighlightTitleColor: UIColor
+    var cancelButtonHighlightTitleColor: UIColor? {
+        get {
+            guard let cancelButtonHighlightTitleColor = cancelButtonHighlightTitleColor else { return cancelButtonTitleColor }
+            return cancelButtonHighlightTitleColor
+        }
+    }
 
     /**
      * Background color of a disabled button for an active alert
@@ -57,55 +92,100 @@ class URBNSwiftAlertStyle: NSObject {
     /**
      * Background color of a selected button for an active alert
      */
-    var buttonSelectedBackgroundColor: UIColor
+    var buttonSelectedBackgroundColor: UIColor? {
+        get {
+            guard let buttonSelectedBackgroundColor = buttonSelectedBackgroundColor else { return buttonBackgroundColor }
+            return buttonSelectedBackgroundColor
+        }
+    }
 
     /**
      * Button title color for a selected state
      */
-    var buttonSelectedTitleColor: UIColor
+    var buttonSelectedTitleColor: UIColor? {
+        get {
+            guard let buttonSelectedTitleColor = buttonSelectedTitleColor else { return buttonTitleColor }
+            return buttonSelectedTitleColor
+        }
+    }
 
     /**
      * Background color of a highlighted button for an active alert
      */
 
-    var buttonHighlightBackgroundColor: UIColor
+    var buttonHighlightBackgroundColor: UIColor? {
+        get {
+            guard let buttonSelectedBackgroundColor = buttonSelectedBackgroundColor else { return buttonBackgroundColor }
+            return buttonSelectedBackgroundColor
+        }
+    }
 
     /**
      * Background color of a highlighted button for a cancel action
      */
 
-    var cancelButtonHighlightBackgroundColor: UIColor
+    var cancelButtonHighlightBackgroundColor: UIColor? {
+        get {
+            guard let cancelButtonHighlightBackgroundColor = cancelButtonHighlightBackgroundColor else { return buttonBackgroundColor }
+            return cancelButtonHighlightBackgroundColor
+        }
+    }
 
     /**
      * Background color of a highlighted button for a destructive action
      */
 
-    var destructiveButtonHighlightBackgroundColor: UIColor
+    var destructiveButtonHighlightBackgroundColor: UIColor? {
+        get {
+            guard let destructiveButtonHighlightBackgroundColor = destructiveButtonHighlightBackgroundColor else { return buttonBackgroundColor }
+            return destructiveButtonHighlightBackgroundColor
+        }
+    }
 
     /**
      * Button title color on highlight
      */
-    var buttonHighlightTitleColor: UIColor
+    var buttonHighlightTitleColor: UIColor? {
+        get {
+            guard let buttonHighlightTitleColor = buttonHighlightTitleColor else { return buttonTitleColor }
+            return buttonHighlightTitleColor
+        }
+    }
 
     /**
      * Text color of a disabled button
      */
-    var disabledButtonTitleColor: UIColor
+    var disabledButtonTitleColor: UIColor?
 
     /**
      * Alpha value of a disabled button
      */
-    var disabledButtonAlpha: NSNumber
+    var disabledButtonAlpha: NSNumber? {
+        get {
+            guard let disabledButtonAlpha = disabledButtonAlpha else { return 0.5 }
+            return disabledButtonAlpha
+        }
+    }
 
     /**
      * Text color of the button titles
      */
-    var buttonTitleColor: UIColor
+    var buttonTitleColor: UIColor? {
+        get {
+            guard let buttonTitleColor = buttonTitleColor else { return .white }
+            return buttonTitleColor
+        }
+    }
 
     /**
      * Background color of alert view
      */
-    var backgroundColor: UIColor
+    var backgroundColor: UIColor? {
+        get {
+            guard let backgroundColor = backgroundColor else { return .white }
+            return backgroundColor
+        }
+    }
 
     /**
      * Text color of the alert's title
@@ -117,20 +197,29 @@ class URBNSwiftAlertStyle: NSObject {
         }
     }
 
-//    - (UIColor *)titleColor {
-//    return _titleColor ?: [UIColor blackColor];
-//    }
-
-
     /**
      * Text color of the alert's message
      */
-    var messageColor: UIColor
+    var messageColor: UIColor? {
+        get {
+            guard let messageColor = messageColor else { return .black }
+            return messageColor
+        }
+    }
 
     /**
      * Font of the alert's title
      */
-    var titleFont: UIFont
+    var titleFont: UIFont? {
+        get {
+            guard let titleFont = titleFont else { return UIFont?.boldSystemFontOfSize(14) }
+            return titleFont
+        }
+    }
+
+//    - (UIFont *)titleFont {
+//    return _titleFont ?: [UIFont boldSystemFontOfSize:14];
+//    }
 
     /**
      * Alignment of the titles's message
