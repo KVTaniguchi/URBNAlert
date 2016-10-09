@@ -8,28 +8,19 @@
 
 import UIKit
 
-//// URBNAlertActionButton
-//@interface URBNAlertActionButton : UIButton
-//
-//@property (nonatomic, assign) URBNAlertActionType actionType;
-//@property (nonatomic, weak) URBNAlertStyle *alertStyler;
-//
-//@end
-
 class URBNSwiftAlertActionButton: UIButton {
-    var actionType: URBNSwiftAlertActionType?
-    var alertStyler: URBNAlertStyle?
+    var actionType: URBNSwiftAlertActionType = .normal
+    var alertStyler = URBNSwiftAlertStyle()
 
     override var isHighlighted: Bool {
         set {
-            guard let type = actionType else { return }
-            switch type {
+            switch actionType {
             case .destructive:
-                backgroundColor = isHighlighted ? .red: .green
+                backgroundColor = isHighlighted ? alertStyler.destructiveButtonHighlightBackgroundColor: alertStyler.destructionButtonBackgroundColor
             case .cancel:
-                backgroundColor = isHighlighted ? .red: .green
+                backgroundColor = isHighlighted ? alertStyler.cancelButtonHighlightBackgroundColor: alertStyler.cancelButtonBackgroundColor
             default:
-                backgroundColor = isHighlighted ? .red: .green
+                backgroundColor = isHighlighted ? alertStyler.buttonHighlightBackgroundColor : alertStyler.buttonBackgroundColor
             }
         }
         get {
@@ -39,11 +30,11 @@ class URBNSwiftAlertActionButton: UIButton {
 
     override var isSelected: Bool {
         set {
-//        self.backgroundColor = selected ? self.alertStyler.buttonSelectedBackgroundColor : [self.alertStyler buttonBackgroundColorForActionType:self.actionType isEnabled:self.enabled];
-            backgroundColor = isSelected ? .red : .green
+            backgroundColor = isSelected ? alertStyler.buttonSelectedBackgroundColor : alertStyler.buttonBackgroundColorForActionType(actionType: actionType, isEnabled: isEnabled)
         }
         get {
             return super.isSelected
         }
     }
+
 }

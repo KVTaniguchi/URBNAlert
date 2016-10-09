@@ -27,9 +27,9 @@ class URBNSwiftAlertAction {
 
     var isEnabled: Bool = false {
         didSet {
-            if isButton && actionButton != nil && actionType != .cancel {
-                //                    [self.actionButton setEnabled:enabled];
-                //                    [self styleButton:self.actionButton isEnabled:enabled];
+            if isButton, actionType != .cancel, let actionButton = actionButton {
+                actionButton.isEnabled = isEnabled
+                styleButton(actionButton: actionButton, isEnabled: isEnabled)
             }
         }
     }
@@ -54,12 +54,12 @@ class URBNSwiftAlertAction {
     }
 
     func styleButton(actionButton: URBNSwiftAlertActionButton, isEnabled: Bool) {
-        //                    UIColor *titleColor = [self.actionButton.alertStyler buttonTitleColorForActionType:actionButton.actionType isEnabled:enabled];
-        //                    UIColor *bgColor = [self.actionButton.alertStyler buttonBackgroundColorForActionType:actionButton.actionType isEnabled:enabled];
-        //
-        //                    [actionButton setTitleColor:titleColor forState:UIControlStateNormal];
-        //                    [actionButton setBackgroundColor:bgColor];
-        //                    actionButton.alpha = enabled ? 1.f : self.actionButton.alertStyler.disabledButtonAlpha.floatValue;
+        let titleColor = actionButton.alertStyler.buttonTitleColorForActionType(actionType: actionButton.actionType, isEnabled: isEnabled)
+        let bgColor = actionButton.alertStyler.buttonBackgroundColorForActionType(actionType: actionButton.actionType, isEnabled: isEnabled)
+
+        actionButton.setTitleColor(titleColor, for: .normal)
+        actionButton.backgroundColor = bgColor
+        actionButton.alpha = isEnabled ? 1.0 : CGFloat(actionButton.alertStyler.disabledButtonAlpha)
     }
 }
 
