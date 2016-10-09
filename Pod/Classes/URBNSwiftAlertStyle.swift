@@ -18,7 +18,7 @@ class URBNSwiftAlertStyle: NSObject {
      */
     var  buttonBackgroundColor: UIColor? {
         get {
-            guard let buttonBackgroundColor = buttonBackgroundColor else { return .lightGrayColor }
+            guard let buttonBackgroundColor = buttonBackgroundColor else { return .lightGray }
             return buttonBackgroundColor
         }
     }
@@ -58,7 +58,7 @@ class URBNSwiftAlertStyle: NSObject {
      */
     var cancelButtonBackgroundColor: UIColor? {
         get {
-            guard let cancelButtonBackgroundColor = cancelButtonBackgroundColor else { return .lightGrayColor }
+            guard let cancelButtonBackgroundColor = cancelButtonBackgroundColor else { return .lightGray }
             return cancelButtonBackgroundColor
         }
     }
@@ -200,51 +200,78 @@ class URBNSwiftAlertStyle: NSObject {
     /**
      * Text color of the alert's message
      */
-    var messageColor: UIColor? {
+    var messageColor: UIColor {
         get {
-            guard let messageColor = messageColor else { return .black }
+            guard messageColor != .black else { return .black }
             return messageColor
         }
+        set {}
     }
 
     /**
      * Font of the alert's title
      */
-    var titleFont: UIFont? {
+    var titleFont: UIFont {
         get {
-            guard let titleFont = titleFont else { return UIFont?.boldSystemFontOfSize(14) }
+            guard titleFont != UIFont.boldSystemFont(ofSize: 14) else { return UIFont.boldSystemFont(ofSize: 14) }
             return titleFont
         }
+        set {}
     }
-
-//    - (UIFont *)titleFont {
-//    return _titleFont ?: [UIFont boldSystemFontOfSize:14];
-//    }
 
     /**
      * Alignment of the titles's message
      */
-    var titleAlignment: NSTextAlignment
+    var titleAlignment: NSTextAlignment {
+        get {
+            guard titleAlignment != .center else { return .center }
+            return titleAlignment
+        }
+    }
 
     /**
      * Font of the alert's message
      */
-    var messageFont: UIFont
+    var messageFont: UIFont {
+        get {
+            guard messageFont != UIFont.systemFont(ofSize: 14) else { return UIFont.systemFont(ofSize: 14) }
+            return messageFont
+        }
+        set {}
+    }
 
     /**
      * Alignment of the alert's message
      */
-    var messageAlignment: NSTextAlignment
+    var messageAlignment: NSTextAlignment {
+        get {
+            guard messageAlignment != nil && messageAlignment != .left else { return .left }
+            return messageAlignment
+        }
+        set {}
+    }
 
     /**
      * Font of the button's titles
      */
-    var buttonFont: UIFont
+    var buttonFont: UIFont {
+        get {
+            guard buttonFont != nil && buttonFont != UIFont.boldSystemFont(ofSize: 14) else { return UIFont.boldSystemFont(ofSize: 14) }
+            return buttonFont
+        }
+        set {}
+    }
 
     /**
      * Corner radius of the alert's buttons
      */
-    var buttonCornerRadius: NSNumber
+    var buttonCornerRadius: Double {
+        get {
+            guard buttonCornerRadius != nil && buttonCornerRadius > 0 && buttonCornerRadius != 8 else { return 8 }
+            return buttonCornerRadius
+        }
+        set {}
+    }
 
     /**
      * Corner radius of the alert view itself
@@ -513,7 +540,7 @@ class URBNSwiftAlertStyle: NSObject {
      *
      *  @return
      */
-    func buttonTitleColorForActionType(actionType: URBNSwiftAlertActionType, isEnabled: BOOL) -> UIColor {
+    func buttonTitleColorForActionType(actionType: URBNSwiftAlertActionType, isEnabled: Bool) -> UIColor? {
         if !isEnabled, let disabledButtonTitleColor = disabledButtonTitleColor {
             return disabledButtonTitleColor
         }
@@ -535,8 +562,8 @@ class URBNSwiftAlertStyle: NSObject {
      *
      *  @return
      */
-    func buttonBackgroundColorForActionType(actionType: URBNSwiftAlertActionType, isEnabled: BOOL) -> UIColor {
-        if !isEnabled, let disabledButtonBackgroundColor = disabledButtonBackgroundColor {
+    func buttonBackgroundColorForActionType(actionType: URBNSwiftAlertActionType, isEnabled: Bool) -> UIColor? {
+        if !isEnabled, disabledButtonBackgroundColor != nil {
             return disabledButtonBackgroundColor
         }
 
