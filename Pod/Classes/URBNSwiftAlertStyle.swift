@@ -312,7 +312,12 @@ class URBNSwiftAlertStyle: NSObject {
     /**
      *  Text Insets for input text fields on alerts
      */
-    var textFieldEdgeInsets: UIEdgeInsets?
+    var textFieldEdgeInsets: UIEdgeInsets {
+        get {
+            return textFieldEdgeInsets ?? UIEdgeInsets.zero
+        }
+        set {}
+    }
 
     /**
      *  Width of vertical separator between buttons that are laid out horiztonally
@@ -659,7 +664,7 @@ class URBNSwiftAlertStyle: NSObject {
      * No default provided
      * Must be used with a non-nil BorderColor
      */
-    var buttonContainerTopBorderWidth: NSNumber?
+    var buttonContainerTopBorderWidth: NSNumber = 0
 
     /**
      * Color for the Bottom border of the button container
@@ -673,7 +678,7 @@ class URBNSwiftAlertStyle: NSObject {
      * No default provided
      * Must be used with a non-nil BorderColor
      */
-    var buttonContainerBottomBorderWidth: NSNumber?
+    var buttonContainerBottomBorderWidth: NSNumber = 0
 
     /**
      * Color for the Right border of the button container
@@ -687,7 +692,7 @@ class URBNSwiftAlertStyle: NSObject {
      * No default provided
      * Must be used with a non-nil BorderColor
      */
-    var buttonContainerRightBorderWidth: NSNumber?
+    var buttonContainerRightBorderWidth: NSNumber = 0
     
     /**
      * Color for the Left border of the button container
@@ -701,7 +706,7 @@ class URBNSwiftAlertStyle: NSObject {
      * No default provided
      * Must be used with a non-nil BorderColor
      */
-    var buttonContainerLeftBorderWidth: NSNumber?
+    var buttonContainerLeftBorderWidth: NSNumber = 0
     
     /**
      * The view you want to become the first responder when the alert view is finished presenting

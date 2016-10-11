@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import URBNConvenience
 
 class URBNSwiftAlertConfig: NSObject {
     /**
@@ -27,7 +28,7 @@ class URBNSwiftAlertConfig: NSObject {
     /**
      *  Array of UITextFields added to the array
      */
-    var inputs = [UITextField]()
+    var inputs = [URBNTextField]()
 
     /**
      *  The view to present from when using showInView:
