@@ -44,12 +44,14 @@ class URBNSwiftAlertView: UIView, UITextFieldDelegate {
 
     var alertConfig: URBNSwiftAlertConfig
     var alertStyler: URBNSwiftAlertStyle
-    var titleLabel = UILabel()
-    var messageTextView = UITextView()
-    var errorLabel = UILabel()
+    let titleLabel = UILabel()
+    let messageTextView = UITextView()
+    let errorLabel = UILabel()
     var customView: UIView?
-    var buttons = [URBNSwiftAlertActionButton]()
+    lazy var buttons = [URBNSwiftAlertActionButton]()
     var sectionCount: Int = 0
+    lazy var buttonContainer = UIView()
+    let kURBNAlertViewHeightPadding: CGFloat = 80.0
 
     init(alertConfig: URBNSwiftAlertConfig, alertStyler: URBNSwiftAlertStyle, customView: UIView? = nil) {
         self.alertStyler = alertStyler
@@ -57,25 +59,20 @@ class URBNSwiftAlertView: UIView, UITextFieldDelegate {
 
         super.init(frame: CGRect.zero)
 
-        if let customView = customView {
-            self.customView = customView
-            sectionCount += 1
-            self.customView?.layer.borderWidth = CGFloat(self.alertStyler.customViewBorderWidth)
-            self.customView?.layer.borderColor = self.alertStyler.customViewBorderColor.cgColor
-        }
-        else {
-            self.customView = UIView()
-        }
+        // set up and add component views
+        setUpTitleLabel()
+        setUpMessageTextView()
 
-        self.customView?.translatesAutoresizingMaskIntoConstraints = false
+        // addCustomView()
+        handleCustomView(customView: customView)
+
         backgroundColor = self.alertStyler.backgroundColor ?? .white
         layer.cornerRadius = CGFloat(self.alertStyler.alertCornerRadius)
 
-        let buttonContainer = UIView()
-        buttonContainer.setURBNBorder(border: buttonContainer.urbn_topBorder, color: self.alertStyler.buttonContainerTopBorderColor, width: CGFloat(self.alertStyler.buttonContainerTopBorderWidth))
-        buttonContainer.setURBNBorder(border: buttonContainer.urbn_bottomBorder, color: self.alertStyler.buttonContainerBottomBorderColor, width: CGFloat(self.alertStyler.buttonContainerBottomBorderWidth))
-        buttonContainer.setURBNBorder(border: buttonContainer.urbn_rightBorder, color: self.alertStyler.buttonContainerRightBorderColor, width: CGFloat(self.alertStyler.buttonContainerRightBorderWidth))
-        buttonContainer.setURBNBorder(border: buttonContainer.urbn_leftBorder, color: self.alertStyler.buttonContainerLeftBorderColor, width: CGFloat(self.alertStyler.buttonContainerLeftBorderWidth))
+
+        // set up buttons
+        buttonContainer.translatesAutoresizingMaskIntoConstraints = false
+        setUpButtonContainerBorders()
 
         var views = ["titleLabel": titleLabel, "messageTextView": messageTextView, "buttonContainer": buttonContainer, "errorLabel": errorLabel]
         addSubview(titleLabel)
@@ -94,11 +91,8 @@ class URBNSwiftAlertView: UIView, UITextFieldDelegate {
             addSubview(textField)
         }
 
-        // add some buttons
+        // add button separators, as per actions
         var separators = [UIView]()
-
-        buttonContainer.translatesAutoresizingMaskIntoConstraints = false
-
         for (index, action) in alertConfig.actions.enumerated() {
             if action.isButton {
                 if alertStyler.separatorHeight > 0 {
@@ -176,7 +170,6 @@ class URBNSwiftAlertView: UIView, UITextFieldDelegate {
             NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat: vertVFL, options: [], metrics: metrics, views: views))
         }
 
-
         // Button Constraints
         self.sectionCount += 1
 
@@ -250,173 +243,145 @@ class URBNSwiftAlertView: UIView, UITextFieldDelegate {
 }
 
 extension URBNSwiftAlertView {
-    override func layoutSubviews() {
-        //    - (void)layoutSubviews {
-        //        [self.messageTextView sizeToFit];
-        //        [self.messageTextView layoutIfNeeded];
-        //
-        //        CGFloat buttonHeight = self.buttons.count == 0 ? 0 : self.alertStyler.buttonHeight.floatValue;
-        //        CGFloat numberOfVerticalButtons;
-        //
-        //        if (self.buttons.count == 2 && !self.alertStyler.useVerticalLayoutForTwoButtons.boolValue) {
-        //            numberOfVerticalButtons = 1;
-        //        }
-        //        else {
-        //            numberOfVerticalButtons = self.buttons.count;
-        //        }
-        //
-        //        CGFloat screenHeight = SCREEN_HEIGHT;
-        //
-        //        // Need this check because before iOS 8 screen.bounes.size is NOT orientation dependent
-        //        CGSize screenSize = [UIScreen mainScreen].bounds.size;
-        //        if ((SYSTEM_VERSION_LESS_THAN(@"8.0")) && UIInterfaceOrientationIsLandscape([UIApplication sharedApplication].statusBarOrientation)) {
-        //            screenHeight = screenSize.width;
-        //        }
-        //
-        //        CGFloat verticalSectionMarginsHeight = (self.alertStyler.sectionVerticalMargin.floatValue * self.sectionCount);
-        //        CGFloat buttonsHeight = (buttonHeight * numberOfVerticalButtons);
-        //        CGFloat buttonsSeperatorHieght  = (numberOfVerticalButtons > 1) ? (self.alertStyler.separatorHeight.floatValue * numberOfVerticalButtons) : 0;
-        //        CGFloat maxHeight = screenHeight - self.titleLabel.intrinsicContentSize.height - verticalSectionMarginsHeight - buttonsHeight - buttonsSeperatorHieght - kURBNAlertViewHeightPadding;
-        //
-        //        if (!self.messageTextView.urbn_heightLayoutConstraint) {
-        //            [self.messageTextView urbn_addHeightLayoutConstraintWithConstant:0];
-        //        }
-        //
-        //        if (self.messageTextView.text.length > 0) {
-        //            if (self.messageTextView.contentSize.height > maxHeight) {
-        //                self.messageTextView.urbn_heightLayoutConstraint.constant = maxHeight;
-        //                self.messageTextView.scrollEnabled = YES;
-        //            }
-        //            else {
-        //                self.messageTextView.urbn_heightLayoutConstraint.constant = self.messageTextView.contentSize.height;
-        //            }
-        //        }
-        //        // code above needs to be called before super. Crashes on iOS 7 if called after
-        //
-        //        [super layoutSubviews];
-        //
-        //        self.titleLabel.preferredMaxLayoutWidth = self.titleLabel.frame.size.width;
-        //
-        //        self.layer.shadowColor = self.alertStyler.alertViewShadowColor.CGColor;
-        //        self.layer.shadowOffset = self.alertStyler.alertShadowOffset;
-        //        self.layer.shadowOpacity = self.alertStyler.alertViewShadowOpacity.floatValue;
-        //        self.layer.shadowRadius = self.alertStyler.alertViewShadowRadius.floatValue;
-        //        [self.layer setActions:@{@"shadowPath" : [NSNull null]}];
-        //}
+    func handleCustomView(customView: UIView?) {
+        if let customView = customView {
+            self.customView = customView
+            sectionCount += 1
+            self.customView?.layer.borderWidth = CGFloat(self.alertStyler.customViewBorderWidth)
+            self.customView?.layer.borderColor = self.alertStyler.customViewBorderColor.cgColor
+        }
+        else {
+            self.customView = UIView()
+        }
+        self.customView?.translatesAutoresizingMaskIntoConstraints = false
+    }
+
+    func setUpButtonContainerBorders() {
+        buttonContainer.setURBNBorder(border: buttonContainer.urbn_topBorder, color: self.alertStyler.buttonContainerTopBorderColor, width: CGFloat(self.alertStyler.buttonContainerTopBorderWidth))
+        buttonContainer.setURBNBorder(border: buttonContainer.urbn_bottomBorder, color: self.alertStyler.buttonContainerBottomBorderColor, width: CGFloat(self.alertStyler.buttonContainerBottomBorderWidth))
+        buttonContainer.setURBNBorder(border: buttonContainer.urbn_rightBorder, color: self.alertStyler.buttonContainerRightBorderColor, width: CGFloat(self.alertStyler.buttonContainerRightBorderWidth))
+        buttonContainer.setURBNBorder(border: buttonContainer.urbn_leftBorder, color: self.alertStyler.buttonContainerLeftBorderColor, width: CGFloat(self.alertStyler.buttonContainerLeftBorderWidth))
     }
 }
 
+extension URBNSwiftAlertView {
+    override func layoutSubviews() {
+        messageTextView.sizeToFit()
+        messageTextView.layoutIfNeeded()
 
-//
-//#pragma mark - Getters
-//- (UILabel *)titleLabel {
-//    if (!_titleLabel) {
-//        _titleLabel = [UILabel new];
-//        _titleLabel.numberOfLines = 2;
-//        _titleLabel.textAlignment = self.alertStyler.titleAlignment;
-//        _titleLabel.adjustsFontSizeToFitWidth = YES;
-//        _titleLabel.font = self.alertStyler.titleFont;
-//        _titleLabel.textColor = self.alertStyler.titleColor;
-//        _titleLabel.text = self.alertConfig.title;
-//    }
-//
-//    return _titleLabel;
-//    }
-//
-//    - (UITextView *)messageTextView {
-//        if (!_messageTextView) {
-//            _messageTextView = [UITextView new];
-//            _messageTextView.backgroundColor = [UIColor clearColor];
-//            _messageTextView.font = self.alertStyler.messageFont;
-//            _messageTextView.textColor = self.alertStyler.messageColor;
-//            _messageTextView.text = self.alertConfig.message;
-//            _messageTextView.textAlignment = self.alertStyler.messageAlignment;
-//            _messageTextView.scrollEnabled = NO;
-//            _messageTextView.editable = NO;
-//            [_messageTextView setContentInset:UIEdgeInsetsZero];
-//            [_messageTextView scrollRangeToVisible:NSMakeRange(0, 0)];
-//        }
-//
-//        return _messageTextView;
-//        }
-//
-//        - (UILabel *)errorLabel {
-//            if (!_errorLabel) {
-//                _errorLabel = [UILabel new];
-//                _errorLabel.numberOfLines = 0;
-//                _errorLabel.font = self.alertStyler.errorTextFont;
-//                _errorLabel.textColor = self.alertStyler.errorTextColor;
-//                _errorLabel.alpha = 0;
-//            }
-//
-//            return _errorLabel;
-//}
-//
+        let buttonHeight = buttons.isEmpty ? 0 : alertStyler.buttonHeight.floatValue
+        var numberOfVerticalButtons = 0
 
+        if buttons.count == 2 && !alertStyler.useVerticalLayoutForTwoButtons.boolValue == true {
+            numberOfVerticalButtons = 2
+        }
+        else {
+            numberOfVerticalButtons = buttons.count
+        }
 
+        let screenHeight = UIScreen.main.bounds.height
 
-//
-//    - (void)setErrorLabelText:(NSString *)errorText {
-//        [UIView animateWithDuration:0.2 animations:^{
-//            self.errorLabel.text = errorText;
-//            self.errorLabel.alpha = 1;
-//            }];
-//        }
-//
-//        - (void)setLoadingState:(BOOL)newState forTextFieldAtIndex:(NSUInteger)index {
-//            [self setButtonsEnabled:!newState];
-//            if (index < self.alertConfig.inputs.count) {
-//                UITextField *textField = [self.alertConfig.inputs objectAtIndex:index];
-//
-//                if (newState) {
-//                    // Disable buttons, show loading
-//                    [textField urbn_showLoading:YES animated:YES spinnerInsets:UIEdgeInsetsMake(0, 0, 0, 8)];
-//                }
-//                else {
-//                    if (textField) {
-//                        [textField urbn_showLoading:NO animated:YES];
-//                    }
-//                }
-//            }
-//            }
-//
-//            - (void)setButtonsEnabled:(BOOL)enabled {
-//                for (URBNAlertAction *action in self.alertConfig.actions) {
-//                    [action setEnabled:enabled];
-//                }
-//}
-//
-//#pragma mark - Actions
-//- (void)buttonTouch:(id)sender {
-//    UIButton *btn = (UIButton *)sender;
-//
-//    if (self.buttonTouchedBlock) {
-//        self.buttonTouchedBlock([self.alertConfig.actions objectAtIndex:btn.tag]);
-//    }
-//    }
-//
+        let verticalSectionMarginsHeight = CGFloat(alertStyler.sectionVerticalMargin) * CGFloat(sectionCount)
+        let buttonsHeight = CGFloat(buttonHeight) * CGFloat(numberOfVerticalButtons)
+        let buttonsSeparatorHeight = numberOfVerticalButtons > 1 ? CGFloat(alertStyler.separatorHeight) * CGFloat(numberOfVerticalButtons) : 0
+        let maxHeight = screenHeight - titleLabel.intrinsicContentSize.height - verticalSectionMarginsHeight - buttonsHeight - buttonsSeparatorHeight - kURBNAlertViewHeightPadding
 
-//}
-//
-//#pragma mark - UITextFieldDelegate
-//- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
-//    // Prevent crashing undo bug
-//    if(range.length + range.location > textField.text.length) {
-//        return NO;
-//    }
-//
-//    NSUInteger newLength = [textField.text length] + [string length] - range.length;
-//
-//    return (newLength > self.alertStyler.textFieldMaxLength.integerValue) ? NO : YES;
-//    }
-//
-//    - (BOOL)textFieldShouldReturn:(UITextField *)textField {
-//        [textField resignFirstResponder];
-//
-//        return NO;
-//}
-//
-//@end
+        if messageTextView.urbn_heightLayoutConstraint == nil {
+            messageTextView.urbn_addHeightLayoutConstraint(withConstant: 0)
+        }
+
+        if !messageTextView.text.isEmpty {
+            if messageTextView.contentSize.height > maxHeight {
+                messageTextView.urbn_heightLayoutConstraint().constant = maxHeight
+                messageTextView.isScrollEnabled = true
+            }
+            else {
+                messageTextView.urbn_heightLayoutConstraint().constant = messageTextView.contentSize.height
+            }
+        }
+
+        // code above needs to be called before super. Crashes on iOS 7 if called after
+        super.layoutSubviews()
+
+        titleLabel.preferredMaxLayoutWidth = titleLabel.frame.size.width
+
+        layer.shadowColor = alertStyler.alertViewShadowColor.cgColor
+        layer.shadowOffset = alertStyler.alertShadowOffset
+        layer.shadowOpacity = Float(alertStyler.alertViewShadowOpacity)
+        layer.shadowRadius = CGFloat(alertStyler.alertViewShadowRadius)
+        layer.actions =  ["shadowPath": NSNull()]
+    }
+}
+
+extension URBNSwiftAlertView {
+    func setUpTitleLabel() {
+        titleLabel.numberOfLines = 2
+        titleLabel.textAlignment = alertStyler.titleAlignment
+        titleLabel.adjustsFontSizeToFitWidth = true
+        titleLabel.font = alertStyler.titleFont
+        titleLabel.textColor = alertStyler.titleColor
+        titleLabel.text = alertConfig.title
+    }
+
+    func setUpMessageTextView() {
+        messageTextView.backgroundColor = .clear
+        messageTextView.font = alertStyler.messageFont
+        messageTextView.textColor = alertStyler.messageColor
+        messageTextView.text = alertConfig.message
+        messageTextView.textAlignment = alertStyler.messageAlignment
+        messageTextView.isScrollEnabled = false
+        messageTextView.isEditable = false
+        messageTextView.contentInset = UIEdgeInsets.zero
+        messageTextView.scrollRangeToVisible(NSMakeRange(0, 0))
+    }
+
+    func setUpErrorLabel() {
+        errorLabel.numberOfLines = 0
+        errorLabel.font = alertStyler.errorTextFont
+        errorLabel.textColor = alertStyler.errorTextColor
+        errorLabel.alpha = 0
+    }
+
+    func setErrorLabelText(errorText: String) {
+        UIView.animate(withDuration: 0.2) { 
+            self.errorLabel.text = errorText
+            self.errorLabel.alpha = 1.0
+        }
+    }
+
+    func setLoadingState(newState: Bool, index: Int) {
+        setButtons(enabled: !newState)
+
+        if index < alertConfig.inputs.count {
+            let textField = alertConfig.inputs[index]
+            if newState {
+                // Disable buttons, show loading
+                textField.urbn_showLoading(true, animated: true, spinnerInsets: UIEdgeInsetsMake(0, 0, 0, 8))
+            }
+            else {
+                textField.urbn_showLoading(false, animated: true)
+            }
+        }
+    }
+
+    func setButtons(enabled: Bool) {
+        for action in alertConfig.actions {
+            action.isEnabled = enabled
+        }
+    }
+
+    @objc(textField:shouldChangeCharactersInRange:replacementString:) func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        guard let text = textField.text, range.length + range.location < text.characters.count else { return false }
+
+        let newLength = Double(text.characters.count + string.characters.count - range.length)
+        return newLength > alertStyler.textFieldMaxLength ? false : true
+    }
+
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return false
+    }
+}
 
 extension URBNSwiftAlertView {
     func createAlertViewButtonWith(action: URBNSwiftAlertAction, index: Int) -> URBNSwiftAlertActionButton {
@@ -464,7 +429,9 @@ extension URBNSwiftAlertView {
     }
 
     func buttonTouch(sender: URBNSwiftAlertActionButton) {
-
+        if let buttonTouchedBlock = buttonTouchedBlock {
+            buttonTouchedBlock(alertConfig.actions[sender.tag])
+        }
     }
 }
 
