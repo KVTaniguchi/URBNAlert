@@ -282,12 +282,12 @@ class URBNSwiftAlertStyle: NSObject {
     /**
      *  Minimum width the alert view can be. Note if using, alertMaxWidth must also be set
      */
-    var alertMinWidth: Double?
+    var alertMinWidth: CGFloat?
 
     /**
      *  Maximum width the alert view can be. Note if using, alertMinWidth must also be set
      */
-    var alertMaxWidth: Double?
+    var alertMaxWidth: CGFloat?
 
     /**
      * Max input length for the text field when enabled

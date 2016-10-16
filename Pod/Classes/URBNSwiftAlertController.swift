@@ -29,19 +29,70 @@ class URBNSwiftAlertController: NSObject {
     }
 
     fileprivate var alertIsVisible = false
-    fileprivate var queue = [URBNAlertView]()
+    fileprivate var queue = [URBNSwiftAlertView]()
     fileprivate var alertWindow = UIWindow()
-    fileprivate var presentingWindow: UIWindow?
-
-    override init() {
-        presentingWindow = UIApplication.shared.windows.first
-    }
+    var presentingWindow = UIApplication.shared.windows.first
 
     func showNextAlert() {
-        if !alertIsVisible, let avc = queue.first {
-            alertIsVisible = true
+        guard alertIsVisible == false, let alertViewController = queue.first else { return }
+        alertIsVisible = true
 
-        }
+
+
+//            // Called anytime the alert is dismissed after the animation is complete
+//            [avc setFinishedDismissingBlock:^(BOOL wasTouchedOutside) {
+//                if (wasTouchedOutside) {
+//                [weakSelf dismissAlertViewController:weakAlertVC];
+//                }
+//
+//                // If the queue is empty, remove the window. If not keep visible to present next alert(s)
+//                if (!weakSelf.queue || weakSelf.queue.count == 0) {
+//                [weakSelf.presentingWindow makeKeyAndVisible];
+//                weakSelf.alertWindow.hidden = YES;
+//                weakSelf.alertWindow = nil;
+//                }
+//                }];
+//
+//            [avc.alertView setButtonTouchedBlock:^(URBNAlertAction *action) {
+//                if (action.completionBlock) {
+//                action.completionBlock(action);
+//                }
+//
+//                if (action.dismissOnCompletion) {
+//                [weakSelf dismissAlertViewController:weakAlertVC];
+//                }
+//                }];
+//
+//            [avc.alertView setAlertViewTouchedBlock:^(URBNAlertAction *action) {
+//                if (action.completionBlock) {
+//                action.completionBlock(action);
+//                }
+//
+//                [weakSelf dismissAlertViewController:weakAlertVC];
+//                }];
+//
+//            // showInView: used
+//            if (avc.alertConfig.presentationView) {
+//                CGRect rect = avc.view.frame;
+//                rect.size.width = avc.alertConfig.presentationView.frame.size.width;
+//                rect.size.height = avc.alertConfig.presentationView.frame.size.height;
+//                avc.view.frame = rect;
+//
+//                [avc.alertConfig.presentationView addSubview:avc.view];
+//            }
+//            else {
+//                [self setupAlertWindow];
+//                self.alertWindow.rootViewController = avc;
+//                [self.alertWindow makeKeyAndVisible];
+//            }
+//
+//            [NSObject cancelPreviousPerformRequestsWithTarget:self];
+//            if (!avc.alertConfig.isActiveAlert) {
+//                CGFloat duration = avc.alertConfig.duration == 0 ? [self calculateDuration:avc.alertConfig] : avc.alertConfig.duration;
+//                [self performSelector:@selector(dismissAlertViewController:) withObject:avc afterDelay:duration];
+//            }
+//        }
+
     }
 }
 

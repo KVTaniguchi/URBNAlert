@@ -21,10 +21,6 @@ class URBNSwiftAlertView: UIView, UITextFieldDelegate {
         set {}
     }
 
-    func setLoadingState(hasNewState: Bool, forTextFieldAtIndex: Int) {
-
-    }
-
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -371,6 +367,8 @@ extension URBNSwiftAlertView {
     }
 
     @objc(textField:shouldChangeCharactersInRange:replacementString:) func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+
+        // TODO Verify this guard
         guard let text = textField.text, range.length + range.location < text.characters.count else { return false }
 
         let newLength = Double(text.characters.count + string.characters.count - range.length)
