@@ -24,6 +24,7 @@
 		6003F5B1195388D20070C39A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58D195388D20070C39A /* Foundation.framework */; };
 		6003F5B2195388D20070C39A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F591195388D20070C39A /* UIKit.framework */; };
 		6003F5BA195388D20070C39A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6003F5B8195388D20070C39A /* InfoPlist.strings */; };
+		BD30FC9A1DB4123400F01E95 /* URBNSwiftViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD30FC991DB4123400F01E95 /* URBNSwiftViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -64,6 +65,8 @@
 		606FC2411953D9B200FFA9A0 /* Tests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Tests-Prefix.pch"; sourceTree = "<group>"; };
 		7F52FE1D59B870516EAE7E93 /* Pods-Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-Tests/Pods-Tests.release.xcconfig"; sourceTree = "<group>"; };
 		B782B80E2F688E1EA0605143 /* Pods_URBNAlert.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_URBNAlert.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		BD30FC981DB4123300F01E95 /* URBNAlert-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "URBNAlert-Bridging-Header.h"; sourceTree = "<group>"; };
+		BD30FC991DB4123400F01E95 /* URBNSwiftViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URBNSwiftViewController.swift; sourceTree = "<group>"; };
 		DD762E09CB21347620A6D3DB /* URBNAlert.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = URBNAlert.podspec; path = ../URBNAlert.podspec; sourceTree = "<group>"; };
 		E18ECD0530BD533F5E99B196 /* Pods_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F369C9C27DC90E49608CF204 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
@@ -140,6 +143,8 @@
 				6003F5A8195388D20070C39A /* Images.xcassets */,
 				6003F594195388D20070C39A /* Supporting Files */,
 				324673CE1AE54F63000A3D15 /* Launch Screen.xib */,
+				BD30FC991DB4123400F01E95 /* URBNSwiftViewController.swift */,
+				BD30FC981DB4123300F01E95 /* URBNAlert-Bridging-Header.h */,
 			);
 			path = URBNAlert;
 			sourceTree = "<group>";
@@ -401,6 +406,7 @@
 				6003F59E195388D20070C39A /* URBNAppDelegate.m in Sources */,
 				6003F5A7195388D20070C39A /* URBNViewController.m in Sources */,
 				6003F59A195388D20070C39A /* main.m in Sources */,
+				BD30FC9A1DB4123400F01E95 /* URBNSwiftViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -540,12 +546,16 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_ENABLE_MODULES = YES;
 				DEVELOPMENT_TEAM = 3B3FT42G96;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "URBNAlert/URBNAlert-Prefix.pch";
 				INFOPLIST_FILE = "URBNAlert/URBNAlert-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "URBNAlert/URBNAlert-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
 				WRAPPER_EXTENSION = app;
 			};
@@ -558,12 +568,15 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_ENABLE_MODULES = YES;
 				DEVELOPMENT_TEAM = 3B3FT42G96;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "URBNAlert/URBNAlert-Prefix.pch";
 				INFOPLIST_FILE = "URBNAlert/URBNAlert-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "URBNAlert/URBNAlert-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 				WRAPPER_EXTENSION = app;
 			};
@@ -573,6 +586,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 0316601E6AE15DE7CC07E54B /* Pods-Tests.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/URBNAlert.app/URBNAlert";
 				DEVELOPMENT_TEAM = 3B3FT42G96;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -598,6 +612,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 7F52FE1D59B870516EAE7E93 /* Pods-Tests.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/URBNAlert.app/URBNAlert";
 				DEVELOPMENT_TEAM = 3B3FT42G96;
 				FRAMEWORK_SEARCH_PATHS = (
