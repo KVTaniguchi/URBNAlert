@@ -10,5 +10,5 @@ target 'URBNAlert' do
 end
 
 
-pod "URBNAlert", :path => "../"
+pod "URBNAlert", :path => "git@github.com:KVTaniguchi/URBNAlert.git", :branch => "URBNAlert_Swifty"
 
