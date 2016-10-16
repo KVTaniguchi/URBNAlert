@@ -14,9 +14,6 @@ class CustomView: UIView {
 
 class URBNSwiftViewController: UIViewController {
 
-    let alertController = URBNSwiftAlertController()
-
-
     override func viewDidLoad() {
         super.viewDidLoad()
 
