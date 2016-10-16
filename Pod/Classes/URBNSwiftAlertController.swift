@@ -43,9 +43,6 @@ class URBNSwiftAlertController: NSObject {
 
     fileprivate var alertIsVisible = false
     fileprivate var queue = [URBNSwiftAlertViewController]()
-    fileprivate var peekQueue: URBNSwiftAlertViewController? {
-        return queue.first
-    }
     fileprivate var alertWindow: UIWindow?
     var presentingWindow = UIApplication.shared.windows.first
 
@@ -138,6 +135,30 @@ class URBNSwiftAlertController: NSObject {
         queue.remove(at: 0)
         return avc
     }
-
 }
 
+
+//**************
+//#pragma mark - Methods
+
+//#pragma mark - Queueing
+
+//    - (URBNAlertViewController *)popQueue {
+//        URBNAlertViewController *avc = self.queue.firstObject;
+//
+//        if (avc) {
+//            NSMutableArray *mutableQueue = self.queue.mutableCopy;
+//            [mutableQueue removeObjectAtIndex:0];
+//            self.queue = mutableQueue.copy;
+//        }
+//
+//        return avc;
+//        }
+//
+//        - (URBNAlertViewController *)peekQueue {
+//            return self.queue.firstObject;
+//}
+//
+
+//
+//@end

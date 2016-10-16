@@ -11,6 +11,32 @@ import URBNConvenience
 
 typealias URBNSwiftAlertViewControllerFinishedDismissing = (_ wasTouchedOutside: Bool) -> Void
 
+//#import <URBNConvenience/UIImage+URBN.h>
+//#import <URBNConvenience/UIView+URBNLayout.h>
+//#import <URBNConvenience/UIView+URBNAnimations.h>
+//#import <URBNConvenience/URBNTextField.h>
+//#import "URBNAlertAction.h"
+
+//- (void)dismissingAlert;
+//- (void)addAlertToQueueWithAlertViewController:(URBNAlertViewController *)avc;
+//@property (nonatomic, strong, readonly) UIWindow *presentingWindow;
+//
+//@end
+//
+//@interface URBNAlertViewController ()
+//
+//@property (nonatomic, strong) URBNAlertController *alertController;
+//@property (nonatomic, strong) NSLayoutConstraint *yPosConstraint;
+//@property (nonatomic, strong) UIImageView *blurImageView;
+//@property (nonatomic, assign) BOOL alertVisible;
+//@property (nonatomic, assign) BOOL viewControllerVisible;
+//@property (nonatomic, assign) NSUInteger indexOfLoadingTextField;
+//@property (nonatomic, readonly) UIView *viewForScreenshot;
+//
+//@end
+//
+//@implementation URBNAlertViewController
+
 class URBNSwiftAlertViewController: UIViewController {
     //typedef void(^URBNAlertViewControllerFinishedDismissing)(BOOL wasTouchedOutside);
     //
@@ -421,42 +447,4 @@ extension URBNSwiftAlertViewController {
     func textFieldAtIndex(index: Int) -> UITextField? {
         return nil
     }
-}
-
-extension URBNSwiftAlertViewController {
-    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-        super.viewWillTransition(to: size, with: coordinator)
-
-        if alertStyler.blurEnabled.boolValue == true {
-            addBlurScreenShot(size: size)
-            coordinator.animateAlongsideTransition(in: nil, animation: { (context) in
-                self.addBlurScreenShot()
-                }, completion: nil)
-        }
-    }
-
-    override func willRotate(to toInterfaceOrientation: UIInterfaceOrientation, duration: TimeInterval) {
-        super.willRotate(to: toInterfaceOrientation, duration: duration)
-
-        if alertStyler.blurEnabled.boolValue == true {
-            var size = viewForScreenShot.bounds.size
-            size.height = size.width
-            size.width = viewForScreenShot.height
-            addBlurScreenShot(size: size)
-        }
-    }
-
-    override func didRotate(from fromInterfaceOrientation: UIInterfaceOrientation) {
-        super.didRotate(from: fromInterfaceOrientation)
-
-        if alertStyler.blurEnabled.boolValue == true {
-            addBlurScreenShot()
-        }
-    }
-
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        guard let style = alertController.presentingWindow?.rootViewController?.preferredStatusBarStyle else { return preferredStatusBarStyle }
-        return style
-    }
-
 }
