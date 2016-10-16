@@ -125,16 +125,6 @@ class URBNSwiftAlertViewController: UIViewController {
     }
 }
 
-extension URBNSwiftAlertController {
-    func dismissingAlert() {
-
-    }
-
-    func addAlertToQueueWithAlertViewController(avc: URBNSwiftAlertViewController) {
-
-    }
-}
-
 // Lifecycle
 extension URBNSwiftAlertViewController {
     override func viewDidLoad() {
@@ -197,25 +187,20 @@ extension URBNSwiftAlertViewController {
     }
 
     func keyboardWillShow(sender: Notification) {
+        if let keyboardFrame = (sender.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue, let alertView = alertView {
+            let keyboardHeight = keyboardFrame.height
+            let alertViewBottomYPos = alertView.frame.height + alertView.frame.origin.y
+            let yOffSet = -(alertViewBottomYPos - keyboardFrame.origin.y)
 
-        //    - (void)keyboardWillShow:(NSNotification *)sender {
-        //    CGRect keyboardFrame = [sender.userInfo [UIKeyboardFrameEndUserInfoKey] CGRectValue];
-        //    CGFloat alertViewBottomYPos = self.alertView.frame.size.height + (self.alertView.frame.origin.y);
-        //
-        //    CGFloat yOffset = -(alertViewBottomYPos - keyboardFrame.origin.y);
-        //
-        //    if (yOffset < 0) {
-        //    self.yPosConstraint.constant = yOffset - 30; // 30 more for so its not right up against the keyboard
-        //
-        //    [UIView animateWithDuration:0.3f animations:^{
-        //    [self.view layoutIfNeeded];
-        //    }];
-        //    }
-        //    }
+            if yOffSet > 0 {
+                yPosConstraint?.constant = yOffSet - 30
+
+                UIView.animate(withDuration: 0.3, animations: { 
+                    self.view.layoutIfNeeded()
+                })
+            }
+        }
     }
-
-
-
 
     func setVisible(visible: Bool, animated: Bool, completion: ((_ alertVC: URBNSwiftAlertViewController, _ isFinished: Bool) -> Void)? = nil) {
         isAlertVisible = visible
@@ -359,7 +344,6 @@ extension URBNSwiftAlertViewController {
      *
      *  @param sender Who is causing the dismiss
      */
-    //- (void)dismissAlert:(id)sender;
     func dismissAlert(sender: AnyObject?) {
         view.endEditing(true)
 
@@ -380,7 +364,6 @@ extension URBNSwiftAlertViewController {
      *
      *  @param action The URBNAlertAction to be added to the alert
      */
-    //- (void)addAction:(URBNAlertAction *)action;
     func addAction(action: URBNSwiftAlertAction) {
         var actions = alertConfig.actions ?? [URBNSwiftAlertAction]()
         actions.append(action)
@@ -433,7 +416,6 @@ extension URBNSwiftAlertViewController {
      *
      *  @param configurationHandler If you wish to customize the textFields properties, provide this block
      */
-    //- (void)addTextFieldWithConfigurationHandler:(void (^)(UITextField *textField))configurationHandler;
     func addTextFieldWithConfigurationHandler(configHandler: ((UITextField) -> Void)? = nil ) {
         var inputs = alertConfig.inputs ?? [URBNTextField]()
 
@@ -448,7 +430,6 @@ extension URBNSwiftAlertViewController {
     /**
      *  Getter for the 1st textField added to the alert. Kept for convenience & backwards compatability
      */
-    //- (UITextField *)textField;
     var textField: UITextField {
         get {
             return UITextField()
@@ -463,7 +444,6 @@ extension URBNSwiftAlertViewController {
      *
      *  @return
      */
-    //- (UITextField *)textFieldAtIndex:(NSUInteger)index;
     func textFieldAtIndex(index: Int) -> UITextField? {
         return nil
     }
