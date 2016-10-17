@@ -8,6 +8,7 @@
 
 #import "URBNViewController.h"
 #import <URBNAlert/URBNAlert.h>
+#import "URBNAlert-Swift.h"
 
 @interface CustomView : UIView
 
@@ -21,6 +22,7 @@
 
 @interface URBNViewController ()
 
+@property (nonatomic, strong) URBNSwiftAlertController *swalertController;
 @property (nonatomic, strong) URBNAlertController *alertController;
 @property (nonatomic, strong) CustomView *customView;
 @property (nonatomic, strong) IBOutlet UIView *bottomView;

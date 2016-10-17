@@ -1,5 +1,5 @@
 //
-//  URBNSwiftViewController.swift
+//  URBNSWiftViewController.swift
 //  URBNAlert
 //
 //  Created by Kevin Taniguchi on 10/16/16.
@@ -7,19 +7,17 @@
 //
 
 import UIKit
-
-class CustomView: UIView {
-    var customTextField = UITextField()
-}
+import URBNConvenience
+import URBNAlert
+import URBNAlert.swift
 
 class URBNSwiftViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        
-    }
 
+    }
 }
 
 //
@@ -318,45 +316,45 @@ class URBNSwiftViewController: UIViewController {
 //    [uac addAction:[URBNAlertAction actionWithTitle:nil actionType:URBNAlertActionTypePassive actionCompleted:^(URBNAlertAction *action) {
 //    // Do something
 //    }]];
-//    
+//
 //    [uac show];
 //    }
-//    
-//    
-//    
-//    
+//
+//
+//
+//
 //    - (IBAction)passiveAlertsSimpleTouchShort:(id)sender {
 //        URBNAlertViewController *uac = [[URBNAlertViewController alloc] initWithTitle:@"Passive alerts!" message:@"Very short alert. Minimum 2 second duration."];
 //        uac.alertConfig.duration = 2.0f;
 //        [uac show];
 //        }
-//        
-//        
-//        
-//        
+//
+//
+//
+//
 //        - (IBAction)passiveAlertCustomViewTouch:(id)sender {
 //            URBNAlertViewController *uac = [[URBNAlertViewController alloc] initWithTitle:nil message:nil view:self.customView];
 //            uac.alertConfig.duration = 5.0f;
 //            uac.alertConfig.touchOutsideViewToDismiss = YES;
-//            
+//
 //            [uac addAction:[URBNAlertAction actionWithTitle:nil actionType:URBNAlertActionTypePassive actionCompleted:^(URBNAlertAction *action) {
 //                // Do something
 //                }]];
-//            
+//
 //            [uac show];
 //            }
-//            
-//            
-//            
+//
+//
+//
 //            - (IBAction)passiveAlertQueuedTouched:(id)sender {
 //                [self passiveAlertSimpleTouch:nil];
 //                [self passiveAlertCustomViewTouch:nil];
 //                [self passiveAlertsSimpleTouchShort:nil];
 //                }
-//                
-//                
-//                
-//                
+//
+//
+//
+//
 //                - (IBAction)passiveAlertShowInView:(id)sender {
 //                    URBNAlertViewController *uac = [[URBNAlertViewController alloc] initWithTitle:@"Passive alerts!" message:@"Very short alert. Minimum 2 second duration."];
 //                    uac.alertStyler.blurTintColor = [[UIColor redColor] colorWithAlphaComponent:0.4];
@@ -372,11 +370,11 @@ class URBNSwiftViewController: UIViewController {
 //    UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil];
 //    URBNViewController *vc = [sb instantiateViewControllerWithIdentifier:@"URBNViewController"];
 //    [vc setIsModal:YES];
-//    
+//
 //    UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:vc];
 //    [self presentViewController:navController animated:YES completion:nil];
 //    }
-//    
+//
 //    - (void)closeTouch {
 //        [self dismissViewControllerAnimated:YES completion:nil];
 //}
@@ -386,25 +384,25 @@ class URBNSwiftViewController: UIViewController {
 //    if (!_customView) {
 //        _customView = [[CustomView alloc] init];
 //        _customView.backgroundColor = [UIColor greenColor];
-//        
+//
 //        UIImageView *imgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"beagle"]];
 //        imgView.contentMode = UIViewContentModeScaleAspectFit;
 //        imgView.translatesAutoresizingMaskIntoConstraints = NO;
 //        imgView.backgroundColor = [UIColor redColor];
 //        [_customView addSubview:imgView];
-//        
+//
 //        _customView.customTextField = [UITextField new];
 //        _customView.customTextField.translatesAutoresizingMaskIntoConstraints = NO;
 //        _customView.customTextField.backgroundColor = [UIColor whiteColor];
 //        _customView.customTextField.borderStyle = UITextBorderStyleRoundedRect;
 //        [_customView addSubview:_customView.customTextField];
-//        
+//
 //        NSDictionary *views = @{@"imgView" : imgView, @"textField" : _customView.customTextField};
 //        [_customView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[imgView]-|" options:0 metrics:nil views:views]];
 //        [_customView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[textField]-|" options:0 metrics:nil views:views]];
 //        [_customView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-[textField]-[imgView]-|" options:0 metrics:nil views:views]];
 //    }
-//    
+//
 //    return _customView;
 //}
 

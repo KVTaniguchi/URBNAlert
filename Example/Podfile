@@ -4,11 +4,9 @@ use_frameworks!
 
 target 'URBNAlert' do
     pod 'URBNConvenience', :git => "git@github.com:urbn/URBNConvenience.git", :branch => "swift3.0"
+    pod 'URBNAlert', :path => '~/Documents/URBNAlert', :branch => "URBNAlert_Swifty"
     target 'Tests' do
     inherit! :search_paths
     end 
 end
-
-
-pod "URBNAlert", :path => "../"
 
