@@ -10,36 +10,36 @@ import Foundation
 import URBNConvenience
 import URBNConvenience.UIView_URBNBorders
 
-typealias URBNSwiftAlertViewButtonTouched = (URBNSwiftAlertAction) -> Void
-typealias URBNSwiftAlertViewTouched = (URBNSwiftAlertAction) -> Void
+public typealias URBNSwiftAlertViewButtonTouched = (URBNSwiftAlertAction) -> Void
+public typealias URBNSwiftAlertViewTouched = (URBNSwiftAlertAction) -> Void
 
-class URBNSwiftAlertView: UIView, UITextFieldDelegate {
-    var errorLabelText: String {
+open class URBNSwiftAlertView: UIView, UITextFieldDelegate {
+    open var errorLabelText: String {
         get {
             return ""
         }
         set {}
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    var buttonTouchedBlock: URBNSwiftAlertViewButtonTouched? {
+    open var buttonTouchedBlock: URBNSwiftAlertViewButtonTouched? {
         get {
             return buttonTouchedBlock ?? nil
         }
         set {}
     }
-    var alertViewTouchedClosure: URBNSwiftAlertViewTouched? {
+    open var alertViewTouchedClosure: URBNSwiftAlertViewTouched? {
         get {
             return alertViewTouchedClosure ?? nil
         }
         set {}
     }
 
-    var alertConfig: URBNSwiftAlertConfig
-    var alertStyler: URBNSwiftAlertStyle
+    open var alertConfig: URBNSwiftAlertConfig
+    open var alertStyler: URBNSwiftAlertStyle
     let titleLabel = UILabel()
     let messageTextView = UITextView()
     let errorLabel = UILabel()
@@ -49,7 +49,7 @@ class URBNSwiftAlertView: UIView, UITextFieldDelegate {
     lazy var buttonContainer = UIView()
     let kURBNAlertViewHeightPadding: CGFloat = 80.0
 
-    init(alertConfig: URBNSwiftAlertConfig, alertStyler: URBNSwiftAlertStyle, customView: UIView? = nil) {
+    public init(alertConfig: URBNSwiftAlertConfig, alertStyler: URBNSwiftAlertStyle, customView: UIView? = nil) {
         self.alertStyler = alertStyler
         self.alertConfig = alertConfig
 
@@ -261,7 +261,7 @@ extension URBNSwiftAlertView {
 }
 
 extension URBNSwiftAlertView {
-    override func layoutSubviews() {
+    override open func layoutSubviews() {
         messageTextView.sizeToFit()
         messageTextView.layoutIfNeeded()
 
@@ -366,7 +366,7 @@ extension URBNSwiftAlertView {
         }
     }
 
-    @objc(textField:shouldChangeCharactersInRange:replacementString:) func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+    @objc(textField:shouldChangeCharactersInRange:replacementString:) public func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
 
         // TODO Verify this guard
         guard let text = textField.text, range.length + range.location < text.characters.count else { return false }
@@ -375,7 +375,7 @@ extension URBNSwiftAlertView {
         return newLength > alertStyler.textFieldMaxLength ? false : true
     }
 
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+    public func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return false
     }

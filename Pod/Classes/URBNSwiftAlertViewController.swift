@@ -11,7 +11,7 @@ import URBNConvenience
 
 typealias URBNSwiftAlertViewControllerFinishedDismissing = (_ wasTouchedOutside: Bool) -> Void
 
-class URBNSwiftAlertViewController: UIViewController {
+open class URBNSwiftAlertViewController: UIViewController {
     //typedef void(^URBNAlertViewControllerFinishedDismissing)(BOOL wasTouchedOutside);
     //
 
@@ -25,7 +25,7 @@ class URBNSwiftAlertViewController: UIViewController {
      *  @return A URBNAlertViewController ready to be configurated further or displayed
      */
 
-    init(title: String, message: String? = nil, view: UIView? = nil) {
+    public init(title: String, message: String? = nil, view: UIView? = nil) {
         alertConfig.title = title
         if let message = message {
             alertConfig.message = message
@@ -35,15 +35,14 @@ class URBNSwiftAlertViewController: UIViewController {
         super.init(nibName: nil, bundle: nil)
     }
     
-    required init?(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
     /**
      *  The actual alertView created & displayed within this view controller
      */
-    //@property (nonatomic, strong) URBNAlertView *alertView;
-    var alertView: URBNSwiftAlertView?
+    open var alertView: URBNSwiftAlertView?
 
     /**
      *  The style object associated with this alert
@@ -56,19 +55,16 @@ class URBNSwiftAlertViewController: UIViewController {
     /**
      *  The configuration object associated with this alert
      */
-    //@property (nonatomic, strong) URBNAlertConfig *alertConfig;
     let alertConfig = URBNSwiftAlertConfig()
 
     /**
      *  The customView displayed in the alert, if passed
      */
-    //@property (nonatomic, strong) UIView *customView;
     var customView: UIView?
 
     /**
      *  Used to detect when the alert has completed its dismissing animation
      */
-    //@property (nonatomic, copy) URBNAlertViewControllerFinishedDismissing finishedDismissingBlock;
     var finishedDismissingClosure: URBNSwiftAlertViewControllerFinishedDismissing? {
         get {
             return nil
@@ -101,7 +97,7 @@ class URBNSwiftAlertViewController: UIViewController {
 
 // Lifecycle
 extension URBNSwiftAlertViewController {
-    override func viewDidLoad() {
+    override open func viewDidLoad() {
         super.viewDidLoad()
 
         if alertStyler.blurEnabled.boolValue == true {
@@ -120,7 +116,7 @@ extension URBNSwiftAlertViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(sender:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
     }
 
-    override func viewWillAppear(_ animated: Bool) {
+    override open func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
         if alertConfig.shouldTouchOutsideToDismiss && !isViewControllerVisible {
@@ -129,7 +125,7 @@ extension URBNSwiftAlertViewController {
         }
     }
 
-    override func viewDidAppear(_ animated: Bool) {
+    override open func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
 
         // Added this check so if you presented a modal via a passive alert then
@@ -146,7 +142,7 @@ extension URBNSwiftAlertViewController {
         }
     }
 
-    override func viewDidDisappear(_ animated: Bool) {
+    override open func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
 
         isViewControllerVisible = false
@@ -176,7 +172,7 @@ extension URBNSwiftAlertViewController {
         }
     }
 
-    func setVisible(visible: Bool, animated: Bool, completion: ((_ alertVC: URBNSwiftAlertViewController, _ isFinished: Bool) -> Void)? = nil) {
+    open func setVisible(visible: Bool, animated: Bool, completion: ((_ alertVC: URBNSwiftAlertViewController, _ isFinished: Bool) -> Void)? = nil) {
         isAlertVisible = visible
 
         let scaler: CGFloat = 0.3
@@ -424,7 +420,7 @@ extension URBNSwiftAlertViewController {
 }
 
 extension URBNSwiftAlertViewController {
-    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+    override open func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
 
         if alertStyler.blurEnabled.boolValue == true {
@@ -435,7 +431,7 @@ extension URBNSwiftAlertViewController {
         }
     }
 
-    override func willRotate(to toInterfaceOrientation: UIInterfaceOrientation, duration: TimeInterval) {
+    override open func willRotate(to toInterfaceOrientation: UIInterfaceOrientation, duration: TimeInterval) {
         super.willRotate(to: toInterfaceOrientation, duration: duration)
 
         if alertStyler.blurEnabled.boolValue == true {
@@ -446,7 +442,7 @@ extension URBNSwiftAlertViewController {
         }
     }
 
-    override func didRotate(from fromInterfaceOrientation: UIInterfaceOrientation) {
+    override open func didRotate(from fromInterfaceOrientation: UIInterfaceOrientation) {
         super.didRotate(from: fromInterfaceOrientation)
 
         if alertStyler.blurEnabled.boolValue == true {
@@ -454,7 +450,7 @@ extension URBNSwiftAlertViewController {
         }
     }
 
-    override var preferredStatusBarStyle: UIStatusBarStyle {
+    override open var preferredStatusBarStyle: UIStatusBarStyle {
         guard let style = alertController.presentingWindow?.rootViewController?.preferredStatusBarStyle else { return preferredStatusBarStyle }
         return style
     }

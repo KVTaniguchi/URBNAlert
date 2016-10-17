@@ -10,33 +10,33 @@ import Foundation
 
 typealias AlertButtonTouched = (_ alertController: URBNAlertController, _ index: Int) -> Void
 
-class URBNSwiftAlertController: NSObject {
-    static let sharedInstance = URBNSwiftAlertController()
+open class URBNSwiftAlertController: NSObject {
+    open static let sharedInstance = URBNSwiftAlertController()
 
     /**
      *  Create & set this property if you wish to customize various properties of the alert view.
      *  If none is passed, default values are used. See URBNAlertStyle for properties you can configue & default values.
      */
-    var alertStyler: URBNSwiftAlertStyle {
+    open var alertStyler: URBNSwiftAlertStyle {
         get {
             return alertStyler ?? URBNSwiftAlertStyle()
         }
         set {}
     }
 
-    func dismissAlertViewController(avc: URBNSwiftAlertViewController) {
+    open func dismissAlertViewController(avc: URBNSwiftAlertViewController) {
         alertIsVisible = false
         avc.dismiss()
         showNextAlert()
     }
 
-    func dismissingAlert() {
+    open func dismissingAlert() {
         alertIsVisible = false
         popQueue()
         showNextAlert()
     }
 
-    func addAlertToQueueWithAlertViewController(avc: URBNSwiftAlertViewController) {
+    open func addAlertToQueueWithAlertViewController(avc: URBNSwiftAlertViewController) {
         queue.append(avc)
         showNextAlert()
     }
@@ -47,9 +47,9 @@ class URBNSwiftAlertController: NSObject {
         return queue.first
     }
     fileprivate var alertWindow: UIWindow?
-    var presentingWindow = UIApplication.shared.windows.first
+    open var presentingWindow = UIApplication.shared.windows.first
 
-    func showNextAlert() {
+    open func showNextAlert() {
         guard alertIsVisible == false, let alertViewController = queue.first else { return }
         alertIsVisible = true
 
@@ -101,7 +101,7 @@ class URBNSwiftAlertController: NSObject {
         }
     }
 
-    func setUpAlertWindow(){
+    open func setUpAlertWindow(){
         guard alertWindow == nil else { return }
         alertWindow = UIWindow(frame: UIScreen.main.bounds)
         alertWindow?.windowLevel = UIWindowLevelAlert
@@ -124,7 +124,7 @@ class URBNSwiftAlertController: NSObject {
     // *  Specifically used to detect new alertViews or actionSheets so we can dismiss ourselves
     // **/
 
-    func resignActive(notif: Notification) {
+    open func resignActive(notif: Notification) {
         if let window = notif.object as? UIWindow, window == alertWindow || window == presentingWindow {
             return
         }
@@ -132,7 +132,7 @@ class URBNSwiftAlertController: NSObject {
         dismissingAlert()
     }
 
-    func popQueue() -> URBNSwiftAlertViewController? {
+    open func popQueue() -> URBNSwiftAlertViewController? {
         // TODO confirm
         guard let avc = queue.first, !queue.isEmpty else { return nil }
         queue.remove(at: 0)

@@ -9,44 +9,44 @@
 import UIKit
 import URBNConvenience
 
-class URBNSwiftAlertConfig: NSObject {
+open class URBNSwiftAlertConfig: NSObject {
     /**
     *  Title text for the alert
     */
-    var title = ""
+    open var title = ""
 
     /**
     *  Message text for the alert
     */
-    var message = ""
+    open var message = ""
 
     /**
      *  Array of actions added to the alert
      */
-    var actions = [URBNSwiftAlertAction]()
+    open var actions = [URBNSwiftAlertAction]()
 
     /**
      *  Array of UITextFields added to the array
      */
-    var inputs = [URBNTextField]()
+    open var inputs = [URBNTextField]()
 
     /**
      *  The view to present from when using showInView:
      */
-    weak var presentationView: UIView?
+    weak open var presentationView: UIView?
 
     /**
      *  Flag if the alert is active. False = a passive alert
      */
-    var isActiveAlert = true
+    open var isActiveAlert = true
 
     /**
      *  Duration of a passive alert (no buttons added)
      */
-    var duration = 3
+    open var duration = 3
 
     /**
      *  When set to YES, you can touch outside of an alert to dismiss it
      */
-    var shouldTouchOutsideToDismiss = true
+    open var shouldTouchOutsideToDismiss = true
 }

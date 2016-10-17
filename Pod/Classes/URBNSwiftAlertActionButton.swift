@@ -8,11 +8,11 @@
 
 import UIKit
 
-class URBNSwiftAlertActionButton: UIButton {
+open class URBNSwiftAlertActionButton: UIButton {
     var actionType: URBNSwiftAlertActionType = .normal
     var alertStyler = URBNSwiftAlertStyle()
 
-    override var isHighlighted: Bool {
+    override open var isHighlighted: Bool {
         set {
             switch actionType {
             case .destructive:
@@ -28,7 +28,7 @@ class URBNSwiftAlertActionButton: UIButton {
         }
     }
 
-    override var isSelected: Bool {
+    override open var isSelected: Bool {
         set {
             backgroundColor = isSelected ? alertStyler.buttonSelectedBackgroundColor : alertStyler.buttonBackgroundColorForActionType(actionType: actionType, isEnabled: isEnabled)
         }

@@ -8,16 +8,16 @@
 
 import Foundation
 
-enum URBNSwiftAlertActionType {
+public enum URBNSwiftAlertActionType {
     case normal
     case destructive
     case cancel
     case passive
 }
 
-typealias URBNSwiftAlertCompletion = (URBNSwiftAlertAction) -> Void
+public typealias URBNSwiftAlertCompletion = (URBNSwiftAlertAction) -> Void
 
-class URBNSwiftAlertAction {
+open class URBNSwiftAlertAction {
     var title = ""
     var dismissOnCompletion = true
     var isSelected = false
@@ -46,7 +46,7 @@ class URBNSwiftAlertAction {
         return URBNSwiftAlertAction(title: title, actionType: actionType, dismissOnCompletion: dismissOnCompletion, completion: completion)
     }
     
-    init(title: String, actionType: URBNSwiftAlertActionType, dismissOnCompletion: Bool, completion: URBNSwiftAlertCompletion?) {
+    public init(title: String, actionType: URBNSwiftAlertActionType, dismissOnCompletion: Bool, completion: URBNSwiftAlertCompletion?) {
         self.title = title
         self.actionType = actionType
         self.dismissOnCompletion = dismissOnCompletion
